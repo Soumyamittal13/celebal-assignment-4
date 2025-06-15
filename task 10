@@ -1,0 +1,5 @@
+SELECT u.name, MAX(s.score) AS max_score
+FROM Users u
+JOIN Submissions s ON u.user_id = s.user_id
+GROUP BY u.name
+ORDER BY max_score DESC;
