@@ -1,0 +1,13 @@
+WITH Ordered AS (
+    SELECT LAT_N,
+           ROW_NUMBER() OVER (ORDER BY LAT_N) AS row_num,
+           COUNT(*) OVER () AS total_rows
+    FROM STATION
+),
+Median AS (
+    SELECT LAT_N
+    FROM Ordered
+    WHERE row_num IN ((total_rows + 1) DIV 2, (total_rows + 2) DIV 2)
+)
+SELECT ROUND(AVG(LAT_N), 4) AS Median_Latitude
+FROM Median;
